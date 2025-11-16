@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-hk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>韓元轉港元計算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .converter {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        #result {
+            margin-top: 15px;
+            font-size: 1.2em;
+            color: #d9534f;
+            font-weight: bold;
+        }
+        .rate-info {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="converter">
+        <h1>韓元轉港元計算器</h1>
+        <label for="krw">輸入韓元 (KRW):</label>
+        <input type="number" id="krw" placeholder="請輸入金額" oninput="convertCurrency()">
+        <div id="result"></div>
+        <div class="rate-info">
+            匯率: 1 韓元 = 0.0054 港元
+        </div>
+    </div>
+
+    <script>
+        function convertCurrency() {
+            const krwInput = document.getElementById('krw');
+            const resultDiv = document.getElementById('result');
+            const rate = 0.0054;
+
+            const krw = parseFloat(krwInput.value);
+
+            if (!isNaN(krw)) {
+                const hkd = krw * rate;
+                resultDiv.textContent = `${krw} 韓元 ≈ ${hkd.toFixed(2)} 港元`;
+            } else {
+                resultDiv.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
