@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>韓元轉港元計算器</title>
+    <title>韓元轉港元計算器 (手機版)</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,17 +29,22 @@
             margin-top: 10px;
             font-weight: bold;
         }
+        /* 調整輸入框樣式以適應手機 */
         input[type="number"] {
             width: 100%;
-            padding: 8px;
+            padding: 12px; /* 增加 padding 讓按鈕更好按 */
             margin-top: 5px;
             box-sizing: border-box;
+            font-size: 16px; /* 確保文字夠大，方便閱讀 */
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
         #result {
             margin-top: 15px;
             font-size: 1.2em;
             color: #d9534f;
             font-weight: bold;
+            word-break: break-all; /* 確保長數字能換行，不溢出 */
         }
         .rate-info {
             margin-top: 15px;
@@ -53,7 +58,15 @@
     <div class="converter">
         <h1>韓元轉港元計算器</h1>
         <label for="krw">輸入韓元 (KRW):</label>
-        <input type="number" id="krw" placeholder="請輸入金額" oninput="convertCurrency()">
+        <!-- 修改：加入 inputmode="numeric" 並設定 pattern="[0-9]*" 以優化手機數字輸入 -->
+        <input 
+            type="number" 
+            id="krw" 
+            inputmode="numeric"
+            pattern="[0-9]*"
+            placeholder="請輸入金額" 
+            oninput="convertCurrency()"
+        >
         <div id="result"></div>
         <div class="rate-info">
             匯率: 1 韓元 = 0.0054 港元
@@ -66,13 +79,19 @@
             const resultDiv = document.getElementById('result');
             const rate = 0.0054;
 
+            // 使用 parseFloat 來處理可能包含小數的輸入
             const krw = parseFloat(krwInput.value);
 
-            if (!isNaN(krw)) {
+            if (!isNaN(krw) && krw >= 0) { // 確保輸入是有效數字且非負數
                 const hkd = krw * rate;
+                // 格式化結果，保留最多兩位小數
                 resultDiv.textContent = `${krw} 韓元 ≈ ${hkd.toFixed(2)} 港元`;
-            } else {
+            } else if (krwInput.value === '') {
+                 // 如果輸入框清空，結果也清空
                 resultDiv.textContent = '';
+            } else {
+                // 如果輸入無效（例如負數），可以選擇顯示錯誤或清空結果
+                resultDiv.textContent = '請輸入有效的正數金額';
             }
         }
     </script>
